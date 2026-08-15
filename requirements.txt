@@ -2,3 +2,4 @@ streamlit
 google-genai
 python-dotenv
 fpdf2
+python-docx

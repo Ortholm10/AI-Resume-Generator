@@ -42,6 +42,56 @@ SYSTEM_INSTRUCTION = (
     "nothing else."
 )
 
+ENHANCE_SYSTEM_INSTRUCTION = (
+    "You are a resume-writing assistant that turns a user's rough "
+    "description of their work into a polished, professional resume "
+    "bullet point. Follow these rules strictly:\n"
+    "1. Never invent NEW facts, numbers, employers, job titles, dates, or "
+    "credentials that are not explicitly present in the user's input. If "
+    "information is missing, leave it out rather than guessing or "
+    "estimating. This rule forbids fabricating facts — it does NOT forbid "
+    "professionally rewriting, restructuring, or elaborating on the facts "
+    "that ARE given.\n"
+    "2. You MAY and SHOULD rephrase and restructure the input using "
+    "standard professional resume phrasing: start with a strong action "
+    "verb, use natural resume-style elaboration, and present the same "
+    "facts the way an experienced resume writer would. A bullet that is "
+    "just the user's input restated near-verbatim, with only minor word "
+    "swaps, is NOT acceptable — it must read as properly polished, not as "
+    "a light edit of the original sentence.\n"
+    "3. Target roughly 15-30 words per bullet point. This is the standard "
+    "length for a professional resume bullet: long enough to sound "
+    "elaborated and complete, but not a sprawling paragraph. A bullet that "
+    "is only a few words longer than the raw input is under-elaborated; a "
+    "bullet stretching well past 30 words is over-written.\n"
+    "4. If clarifying details/answers are supplied alongside the original "
+    "entry, you MUST weave the specific details from those answers into "
+    "the final bullet point itself — do not ignore them or leave them "
+    "as generic mentions.\n"
+    "5. Avoid generic filler phrases such as 'team player', "
+    "'results-driven', 'hard worker', 'go-getter', or 'detail-oriented' "
+    "that carry no specific information. Every word should tie back to a "
+    "concrete fact from the input, not be buzzword padding.\n"
+    "6. Prefer concise, specific, direct language over vague or flowery "
+    "phrasing — elaboration means fuller professional framing of the real "
+    "facts, not adding fluff.\n\n"
+    "Examples of turning an under-elaborated input into a properly "
+    "polished bullet (these are illustrations of the transformation, not "
+    "verbatim text to reuse):\n"
+    '- Input: "handled 30 customer complaints per week" -> Bullet: '
+    '"Resolved an average of 30 customer service complaints weekly, '
+    'maintaining consistent quality and response standards."\n'
+    '- Input: "wrote code for the checkout page" -> Bullet: "Developed '
+    'and implemented the checkout page functionality, contributing '
+    'directly to the site\'s core purchasing flow."\n'
+    '- Input: "trained 5 new hires" (clarifying answer: "training covered '
+    'POS system and safety procedures") -> Bullet: "Trained 5 new hires '
+    'on point-of-sale operations and safety procedures, ensuring a '
+    'smooth onboarding experience."\n\n'
+    "Respond with valid JSON only, matching the requested schema, and "
+    "nothing else."
+)
+
 _client = None
 
 
@@ -71,10 +121,10 @@ def _is_rate_limit_error(error):
     return "429" in message or "RESOURCE_EXHAUSTED" in message or "QUOTA" in message
 
 
-def _generate_with_retry(contents, response_schema):
+def _generate_with_retry(contents, response_schema, system_instruction=SYSTEM_INSTRUCTION):
     client = _get_client()
     config = types.GenerateContentConfig(
-        system_instruction=SYSTEM_INSTRUCTION,
+        system_instruction=system_instruction,
         response_mime_type="application/json",
         response_schema=response_schema,
         temperature=0.4,
@@ -183,8 +233,11 @@ def enhance_resume_content(entry_text, answers=None, tone=None, target_role=None
 
     prompt = (
         "Rewrite the resume entry below into polished, professional resume "
-        "bullet points, using only the information given. Incorporate the "
-        "clarifying details if provided.\n\n"
+        "bullet points, using only the information given. Do not just "
+        "restate the entry near-verbatim — rephrase it with strong resume "
+        "phrasing and natural elaboration, aiming for roughly 15-30 words "
+        "per bullet. If clarifying details are provided, weave those "
+        "specific details into the bullet itself.\n\n"
         + "\n\n".join(context_parts)
         + '\n\nRespond as JSON: {"bullet_points": ["...", "..."]}'
     )
@@ -200,7 +253,9 @@ def enhance_resume_content(entry_text, answers=None, tone=None, target_role=None
         required=["bullet_points"],
     )
 
-    response = _generate_with_retry(prompt, schema)
+    response = _generate_with_retry(
+        prompt, schema, system_instruction=ENHANCE_SYSTEM_INSTRUCTION
+    )
 
     fallback = {"bullet_points": [entry_text.strip()]}
     data = _parse_json(response.text, fallback=fallback)
