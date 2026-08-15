@@ -1,7 +1,7 @@
-import base64
 import inspect
 import uuid
 
+import fitz
 import streamlit as st
 
 from src import ai_engine, docx_generator, pdf_generator
@@ -829,6 +829,21 @@ def _build_resume_docx():
     )
 
 
+def _pdf_bytes_to_page_images(pdf_bytes, zoom=2.0):
+    """Render each page of a PDF (given as bytes) to PNG image bytes.
+
+    Data-URI iframes are blocked by Chrome's iframe navigation restrictions,
+    so the preview renders pages as images instead.
+    """
+    matrix = fitz.Matrix(zoom, zoom)
+    images = []
+    with fitz.open(stream=pdf_bytes, filetype="pdf") as doc:
+        for page in doc:
+            pixmap = page.get_pixmap(matrix=matrix)
+            images.append(pixmap.tobytes("png"))
+    return images
+
+
 if st.button("Generate Preview"):
     try:
         st.session_state["preview_pdf_bytes"] = _build_preview_pdf()
@@ -842,16 +857,12 @@ if st.session_state.get("preview_error"):
     st.error(st.session_state["preview_error"])
 
 if st.session_state.get("preview_pdf_bytes"):
-    encoded = base64.b64encode(st.session_state["preview_pdf_bytes"]).decode("ascii")
     st.caption(
         f"Preview of the {st.session_state.get('preview_template', '')} template. "
         "Edit any field and press Generate Preview again to refresh it."
     )
-    st.markdown(
-        f'<iframe src="data:application/pdf;base64,{encoded}" '
-        'width="100%" height="800px" style="border:1px solid #ddd;"></iframe>',
-        unsafe_allow_html=True,
-    )
+    for page_image in _pdf_bytes_to_page_images(st.session_state["preview_pdf_bytes"]):
+        st.image(page_image, use_container_width=True)
 
     col_pdf, col_docx = st.columns(2)
     with col_pdf:
