@@ -1,6 +1,51 @@
 import streamlit as st
 
+from src import ai_engine
+
 st.title("AI Resume Generator")
+
+
+def _run_ai_call(entry, func, *args, spinner_text, **kwargs):
+    """Run a Gemini call with a spinner, capturing errors on the entry.
+
+    Returns the call's result, or None if it raised AIEngineError (in which
+    case entry["ai_error"] is set for inline display).
+    """
+    entry["ai_error"] = ""
+    try:
+        with st.spinner(spinner_text):
+            return func(*args, **kwargs)
+    except ai_engine.AIEngineError as error:
+        entry["ai_error"] = str(error)
+        return None
+
+
+def _generate_and_store(entry, answers):
+    result = _run_ai_call(
+        entry,
+        ai_engine.enhance_resume_content,
+        entry["responsibilities"],
+        answers=answers,
+        spinner_text="Polishing this entry with AI...",
+    )
+    if result is not None:
+        entry["ai_result"] = "\n".join(result["bullet_points"])
+
+
+def _new_work_entry():
+    return {
+        "company": "",
+        "role": "",
+        "dates": "",
+        "responsibilities": "",
+        # AI enhancement state
+        "ai_questions": None,  # None = not fetched yet; [] once fetched with no questions
+        "ai_answers": [],
+        "ai_skipped": False,
+        "ai_result": "",
+        "ai_error": "",
+    }
+
 
 # ---------- Session State Initialization ----------
 
@@ -14,9 +59,7 @@ if "personal_info" not in st.session_state:
     }
 
 if "work_history" not in st.session_state:
-    st.session_state.work_history = [
-        {"company": "", "role": "", "dates": "", "responsibilities": ""}
-    ]
+    st.session_state.work_history = [_new_work_entry()]
 
 if "education" not in st.session_state:
     st.session_state.education = [
@@ -72,6 +115,69 @@ for i, entry in enumerate(st.session_state.work_history):
     entry["responsibilities"] = st.text_area(
         "Responsibilities", value=entry["responsibilities"], key=f"work_resp_{i}"
     )
+
+    # ----- AI Enhancement -----
+
+    entry.setdefault("ai_questions", None)
+    entry.setdefault("ai_answers", [])
+    entry.setdefault("ai_skipped", False)
+    entry.setdefault("ai_result", "")
+    entry.setdefault("ai_error", "")
+
+    if st.button("Enhance with AI", key=f"enhance_{i}"):
+        entry["ai_result"] = ""
+        entry["ai_skipped"] = False
+        questions = _run_ai_call(
+            entry,
+            ai_engine.get_clarifying_questions,
+            entry["responsibilities"],
+            spinner_text="Checking this entry for gaps...",
+        )
+        if questions is not None:
+            entry["ai_questions"] = questions
+            entry["ai_answers"] = [""] * len(questions)
+            if not questions:
+                # Nothing to clarify — generate right away.
+                _generate_and_store(entry, [])
+        st.rerun()
+
+    if entry["ai_error"]:
+        st.error(entry["ai_error"])
+
+    awaiting_answers = (
+        entry["ai_questions"]
+        and not entry["ai_result"]
+        and not entry["ai_skipped"]
+    )
+    if awaiting_answers:
+        st.write("A few quick questions to make this entry more specific:")
+        for qi, question in enumerate(entry["ai_questions"]):
+            entry["ai_answers"][qi] = st.text_input(
+                question,
+                value=entry["ai_answers"][qi],
+                key=f"work_ai_answer_{i}_{qi}",
+            )
+        col_a, col_b = st.columns(2)
+        with col_a:
+            if st.button("Submit Answers", key=f"submit_answers_{i}"):
+                _generate_and_store(entry, entry["ai_answers"])
+                st.rerun()
+        with col_b:
+            if st.button("Skip and generate anyway", key=f"skip_answers_{i}"):
+                entry["ai_skipped"] = True
+                _generate_and_store(entry, [])
+                st.rerun()
+
+    if entry["ai_result"]:
+        entry["ai_result"] = st.text_area(
+            "AI-polished version (edit before using)",
+            value=entry["ai_result"],
+            key=f"work_ai_result_{i}",
+        )
+        if st.button("Regenerate", key=f"regenerate_{i}"):
+            _generate_and_store(entry, entry["ai_answers"])
+            st.rerun()
+
     if len(st.session_state.work_history) > 1:
         if st.button("Remove This Entry", key=f"remove_work_{i}"):
             st.session_state.work_history.pop(i)
@@ -79,9 +185,7 @@ for i, entry in enumerate(st.session_state.work_history):
     st.divider()
 
 if st.button("Add Work History Entry"):
-    st.session_state.work_history.append(
-        {"company": "", "role": "", "dates": "", "responsibilities": ""}
-    )
+    st.session_state.work_history.append(_new_work_entry())
     st.rerun()
 
 
