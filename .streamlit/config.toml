@@ -1,0 +1,37 @@
+# Dark, modern theme — indigo accent on a near-black background.
+[theme]
+base = "dark"
+primaryColor = "#6366f1"
+backgroundColor = "#0f1117"
+secondaryBackgroundColor = "#1a1d27"
+codeBackgroundColor = "#1a1d27"
+textColor = "#f2f3f7"
+linkColor = "#818cf8"
+borderColor = "#2b2f3b"
+showWidgetBorder = true
+showSidebarBorder = false
+baseRadius = "10px"
+buttonRadius = "10px"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+codeFont = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+codeFontSize = "0.85rem"
+codeTextColor = "#e4e4e7"
+baseFontSize = 15
+baseFontWeight = 400
+headingFontSizes = ["32px", "24px", "20px", "16px", "14px", "12px"]
+headingFontWeights = [700, 600, 600, 500, 500, 500]
+linkUnderline = false
+chartCategoricalColors = ["#6366f1", "#8b5cf6", "#ec4899", "#14b8a6", "#f59e0b", "#ef4444", "#22c55e"]
+
+violetColor = "#8b5cf6"
+blueColor = "#6366f1"
+greenColor = "#22c55e"
+yellowColor = "#f59e0b"
+orangeColor = "#f97316"
+redColor = "#ef4444"
+
+[theme.sidebar]
+backgroundColor = "#0a0b10"
+secondaryBackgroundColor = "#161822"
+codeBackgroundColor = "#161822"
+borderColor = "#2b2f3b"
