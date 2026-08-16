@@ -1,368 +1,505 @@
-<!DOCTYPE html><html lang="en" style="scroll-behavior: smooth;"><head>
+<!DOCTYPE html>
+<html>
+<head>
 <meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>ResumeAI - Resumes that don't lie for you.</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "secondary": "#855300",
-                        "on-error": "#ffffff",
-                        "on-primary": "#ffffff",
-                        "on-secondary": "#ffffff",
-                        "primary-fixed-dim": "#c3c0ff",
-                        "tertiary-fixed-dim": "#4edea3",
-                        "on-secondary-fixed-variant": "#653e00",
-                        "error-container": "#ffdad6",
-                        "on-background": "#0d1b36",
-                        "surface": "#faf8ff",
-                        "inverse-surface": "#23304d",
-                        "tertiary-container": "#006e4b",
-                        "surface-dim": "#cdd9fe",
-                        "outline-variant": "#c7c4d8",
-                        "secondary-fixed-dim": "#ffb95f",
-                        "surface-container-highest": "#d9e2ff",
-                        "on-primary-fixed-variant": "#3323cc",
-                        "secondary-container": "#fea619",
-                        "on-error-container": "#93000a",
-                        "on-surface": "#0d1b36",
-                        "surface-tint": "#4d44e3",
-                        "on-surface-variant": "#464555",
-                        "secondary-fixed": "#ffddb8",
-                        "primary-fixed": "#e2dfff",
-                        "on-tertiary-fixed": "#002113",
-                        "on-primary-fixed": "#0f0069",
-                        "tertiary-fixed": "#6ffbbe",
-                        "on-tertiary-container": "#67f4b7",
-                        "tertiary": "#005338",
-                        "background": "#faf8ff",
-                        "primary": "#3525cd",
-                        "surface-container-low": "#f2f3ff",
-                        "on-primary-container": "#dad7ff",
-                        "inverse-on-surface": "#edf0ff",
-                        "on-tertiary-fixed-variant": "#005236",
-                        "surface-container-lowest": "#ffffff",
-                        "surface-container": "#e9edff",
-                        "on-secondary-container": "#684000",
-                        "surface-container-high": "#e1e8ff",
-                        "surface-bright": "#faf8ff",
-                        "surface-variant": "#d9e2ff",
-                        "inverse-primary": "#c3c0ff",
-                        "primary-container": "#4f46e5",
-                        "error": "#ba1a1a",
-                        "outline": "#777587",
-                        "on-secondary-fixed": "#2a1700",
-                        "on-tertiary": "#ffffff"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "section-gap-mobile": "64px",
-                        "grid-margin": "24px",
-                        "section-gap-desktop": "120px",
-                        "container-max": "1200px",
-                        "base": "8px"
-                    },
-                    "fontFamily": {
-                        "display-accent": ["Noto Serif"],
-                        "label-caps": ["Inter"],
-                        "display-lg": ["Inter"],
-                        "display-lg-mobile": ["Inter"],
-                        "headline-sm": ["Inter"],
-                        "headline-md": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "body-md": ["Inter"]
-                    },
-                    "fontSize": {
-                        "display-accent": ["64px", { "lineHeight": "1.1", "fontWeight": "400" }],
-                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700" }],
-                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
-                        "display-lg-mobile": ["40px", { "lineHeight": "1.2", "fontWeight": "800" }],
-                        "headline-sm": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
-                        "headline-md": ["36px", { "lineHeight": "1.2", "fontWeight": "700" }],
-                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
-                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }]
-                    },
-                    "animation": {
-                        "fade-in-up": "fadeInUp 0.8s ease-out forwards",
-                        "blob": "blob 7s infinite"
-                    },
-                    "keyframes": {
-                        "fadeInUp": {
-                            "0%": { opacity: "0", transform: "translateY(20px)" },
-                            "100%": { opacity: "1", transform: "translateY(0)" }
-                        },
-                        "blob": {
-                            "0%": { transform: "translate(0px, 0px) scale(1)" },
-                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
-                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
-                            "100%": { transform: "translate(0px, 0px) scale(1)" }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-<style>
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(229, 231, 235, 0.5);
-        }
-        .perspective-tilt {
-            transition: transform 0.5s ease;
-            transform-style: preserve-3d;
-        }
-        .perspective-tilt:hover {
-            transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) scale3d(1.02, 1.02, 1.02);
-            box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.15);
-        }
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
-<body class="bg-surface text-on-surface font-body-md antialiased overflow-x-hidden">
-<!-- TopNavBar -->
-<nav class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-xl fixed top-0 w-full z-50 shadow-sm border-b border-outline-variant/30 dark:border-outline/20 transition-all duration-300 ease-in-out">
-<div class="flex justify-between items-center max-w-container-max mx-auto px-grid-margin h-20">
-<a class="font-display-lg text-headline-sm font-extrabold text-primary dark:text-primary-fixed-dim tracking-tight" href="#">ResumeAI</a>
-<div class="hidden md:flex gap-8">
-<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md hover:scale-105 transition-transform duration-200" href="#features">Features</a>
-<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md hover:scale-105 transition-transform duration-200" href="#templates">Templates</a>
-<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md hover:scale-105 transition-transform duration-200" href="#pricing">Pricing</a>
-<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md hover:scale-105 transition-transform duration-200" href="#about">About</a>
-</div>
-<div class="flex items-center gap-4">
-<a class="hidden md:block text-on-surface-variant hover:text-primary font-body-md text-body-md transition-colors" href="#">Login</a>
-<a class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-body-md text-body-md hover:scale-105 transition-transform duration-200 shadow-md" href="https://cv-madgenius-ai.streamlit.app/" target="_blank" rel="noopener noreferrer">Build My Resume</a>
-</div>
-</div>
-</nav>
-<!-- Hero Section -->
-<header class="relative pt-32 pb-section-gap-mobile md:pb-section-gap-desktop overflow-hidden flex items-center min-h-[90vh]">
-<!-- Background Blobs -->
-<div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-<div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary-fixed rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-<div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-tertiary-fixed rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" style="animation-delay: 2s;"></div>
-<div class="absolute bottom-[-20%] left-[20%] w-[32rem] h-[32rem] bg-secondary-fixed rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob" style="animation-delay: 4s;"></div>
-</div>
-<div class="max-w-container-max mx-auto px-grid-margin w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-<div class="animate-fade-in-up">
-<div class="inline-flex items-center gap-2 bg-tertiary-fixed/20 text-tertiary px-4 py-1.5 rounded-full mb-6 glass-panel">
-<span class="material-symbols-outlined text-sm">verified</span>
-<span class="font-label-caps text-label-caps">100% Free — No account needed</span>
-</div>
-<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-6">
-                    Resumes that <br>
-<span class="font-display-accent text-primary italic">don't lie</span> for you.
-                </h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-xl">
-                    ResumeAI asks the right clarifying questions to turn vague experience into high-impact, honest bullet points. No fabrication, just better writing.
-                </p>
-<div class="flex flex-col sm:flex-row gap-4">
-<a class="bg-secondary-container text-on-secondary-container px-8 py-4 rounded-lg font-headline-sm text-headline-sm text-center shadow-[0_0_20px_rgba(254,166,25,0.4)] hover:shadow-[0_0_30px_rgba(254,166,25,0.6)] hover:scale-105 transition-all duration-300" href="https://cv-madgenius-ai.streamlit.app/" target="_blank" rel="noopener noreferrer">
-                        Build My Resume — Free
-                    </a>
-</div>
-</div>
-<div class="relative h-[500px] w-full animate-fade-in-up" style="animation-delay: 0.2s;">
-<!-- STITCH_SVG_START:ANIMATION_2 class="absolute inset-0 w-full h-full object-contain filter drop-shadow-2xl" --><div class="absolute inset-0 w-full h-full object-contain filter drop-shadow-2xl" id="animated-svg-ANIMATION_2" style="display:block;"><svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<linearGradient id="cardGrad" x1="0%" x2="100%" y1="0%" y2="100%">
-<stop offset="0%" style="stop-color:#ffffff;stop-opacity:1"></stop>
-<stop offset="100%" style="stop-color:#f8fafc;stop-opacity:1"></stop>
-</linearGradient>
-<filter height="140%" id="shadow" width="140%" x="-20%" y="-20%">
-<blur stdDeviation="10"></blur>
-</filter>
-</defs>
-<!-- Resume Card -->
-<rect fill="url(#cardGrad)" height="260" rx="12" stroke="#e2e8f0" stroke-width="1" width="400" x="50" y="20"></rect>
-<!-- Profile/Header Placeholder -->
-<rect fill="#4f46e5" height="12" opacity="0.8" rx="4" width="120" x="80" y="50"></rect>
-<rect fill="#94a3b8" height="8" opacity="0.4" rx="4" width="200" x="80" y="70"></rect>
-<!-- Experience Section -->
-<text fill="#14213d" font-family="sans-serif" font-size="14" font-weight="600" x="80" y="110">Experience</text>
-<!-- Bullet Point Container -->
-<g id="bullet-animation">
-<!-- Vague State -->
-<g id="state-vague">
-<circle cx="85" cy="135" fill="#4f46e5" r="3"></circle>
-<text fill="#4b5563" font-family="sans-serif" font-size="12" x="100" y="139">
-        Helped with customer support and fixed some issues.
-        <animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="1;1;0;0;0;1"></animate>
-</text>
-</g>
-<!-- Clarifying Question -->
-<g id="question-bubble" opacity="0">
-<rect fill="#f59e0b" height="60" rx="10" width="200" x="220" y="145"></rect>
-<path d="M240 145 L250 135 L260 145" fill="#f59e0b"></path>
-<text fill="white" font-family="sans-serif" font-size="11" font-weight="600" x="235" y="165">Gemini: How many customers?</text>
-<text fill="white" font-family="sans-serif" font-size="11" font-weight="600" x="235" y="182">What was the resolution time?</text>
-<animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0"></animate>
-<animateTransform attributeName="transform" dur="10s" repeatCount="indefinite" type="translate" values="0 10; 0 0; 0 0; 0 -10; 0 10"></animateTransform>
-</g>
-<!-- Polished State -->
-<g id="state-polished" opacity="0">
-<circle cx="85" cy="135" fill="#10b981" r="3"></circle>
-<text fill="#14213d" font-family="sans-serif" font-size="12" font-weight="600" x="100" y="139">
-        Resolved 200+ tickets weekly with a 15% faster turnaround.
-        <animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0;1;1;0"></animate>
-</text>
-</g>
-</g>
-<!-- More Placeholder Lines -->
-<rect fill="#e2e8f0" height="6" rx="3" width="300" x="100" y="160"></rect>
-<rect fill="#e2e8f0" height="6" rx="3" width="250" x="100" y="175"></rect>
-<rect fill="#e2e8f0" height="6" rx="3" width="320" x="100" y="210"></rect>
-</svg>
-</div><!-- STITCH_SVG_END:ANIMATION_2 -->
-</div>
-</div>
-</header>
-<!-- Problem / Solution -->
-<section class="py-section-gap-mobile md:py-section-gap-desktop bg-surface-container-lowest">
-<div class="max-w-container-max mx-auto px-grid-margin">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-<div class="reveal active">
-<h2 class="font-headline-md text-headline-md text-on-surface mb-6">Generic AI tools make stuff up.</h2>
-<div class="glass-panel p-8 rounded-xl border-l-4 border-error/50">
-<p class="font-body-md text-body-md text-on-surface-variant italic mb-4">"Led a team of 50 to increase revenue by 300%..."</p>
-<p class="font-label-caps text-label-caps text-error flex items-center gap-2">
-<span class="material-symbols-outlined">warning</span> HALLUCINATED METRIC
-                        </p>
-</div>
-</div>
-<div class="reveal active">
-<h2 class="font-headline-md text-headline-md text-on-surface mb-6">ResumeAI asks you first.</h2>
-<div class="glass-panel p-8 rounded-xl border-l-4 border-primary">
-<div class="flex items-start gap-4 mb-4">
-<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-on-primary-container text-sm">smart_toy</span>
-</div>
-<div class="bg-surface-container p-4 rounded-lg rounded-tl-none w-full">
-<p class="font-body-md text-body-md text-on-surface">You mentioned managing a project. Did you have a specific budget or team size?</p>
-</div>
-</div>
-<div class="flex items-end justify-end gap-4">
-<div class="bg-primary/10 p-4 rounded-lg rounded-tr-none">
-<p class="font-body-md text-body-md text-on-surface">Yes, 3 people and about $10k.</p>
-</div>
-<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-on-surface-variant text-sm">person</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- How it Works -->
-<section class="py-section-gap-mobile md:py-section-gap-desktop bg-surface relative overflow-hidden">
-<div class="max-w-container-max mx-auto px-grid-margin relative z-10">
-<div class="text-center mb-16 reveal active">
-<h2 class="font-headline-md text-headline-md text-on-surface mb-4">How it works</h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">A seamless process to translate your raw experience into a professional narrative.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-<!-- Step 1 -->
-<div class="glass-panel p-6 rounded-xl hover:border-primary transition-colors reveal active" style="transition-delay: 0.1s;">
-<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-primary text-xl">edit_document</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">1. Fill details</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Dump your messy notes, old resumes, or raw thoughts.</p>
-</div>
-<!-- Step 2 -->
-<div class="glass-panel p-6 rounded-xl hover:border-primary transition-colors reveal active" style="transition-delay: 0.2s;">
-<div class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center mb-6 shadow-lg shadow-primary-container/30">
-<span class="material-symbols-outlined text-on-primary-container text-xl">forum</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">2. AI clarifies</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Gemini asks targeted questions to extract impact and metrics.</p>
-</div>
-<!-- Step 3 -->
-<div class="glass-panel p-6 rounded-xl hover:border-primary transition-colors reveal active" style="transition-delay: 0.3s;">
-<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-primary text-xl">preview</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">3. Live Preview</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Watch your professional resume generate in real-time.</p>
-</div>
-<!-- Step 4 -->
-<div class="glass-panel p-6 rounded-xl hover:border-primary transition-colors reveal active" style="transition-delay: 0.4s;">
-<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-primary text-xl">download</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">4. Export</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Download as an ATS-friendly PDF or editable DOCX.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Final CTA -->
-<section class="py-section-gap-mobile md:py-section-gap-desktop bg-gradient-to-br from-primary-container to-surface-tint text-on-primary relative overflow-hidden">
-<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-50"></div>
-<div class="max-w-container-max mx-auto px-grid-margin relative z-10 text-center reveal active">
-<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-6">Ready to write a better resume?</h2>
-<p class="font-body-lg text-body-lg text-on-primary-container mb-10 max-w-2xl mx-auto opacity-90">Stop struggling with phrasing. Let ResumeAI extract your true value and present it perfectly.</p>
-<a class="inline-block bg-secondary-container text-on-secondary-container px-10 py-5 rounded-lg font-headline-sm text-headline-sm shadow-[0_0_20px_rgba(254,166,25,0.3)] hover:shadow-[0_0_40px_rgba(254,166,25,0.6)] hover:scale-105 transition-all duration-300" href="https://cv-madgenius-ai.streamlit.app/" target="_blank" rel="noopener noreferrer">
-                Build My Resume — Free
-            </a>
-<p class="mt-4 font-label-caps text-label-caps opacity-75">No credit card. No account required to start.</p>
-</div>
-</section>
-<!-- Footer -->
-<footer class="bg-surface-container dark:bg-inverse-surface w-full py-section-gap-mobile md:py-section-gap-desktop max-w-container-max mx-auto px-grid-margin flex flex-col md:flex-row justify-between items-center gap-base border-t-8 border-surface-container-high dark:border-surface-container-highest">
-<div class="flex flex-col items-center md:items-start gap-2">
-<span class="font-display-lg text-headline-sm font-bold text-primary dark:text-primary-fixed">ResumeAI</span>
-<span class="font-body-md text-body-md text-secondary dark:text-secondary-fixed opacity-90 hover:opacity-100">© 2024 ResumeAI. Powered by Gemini.</span>
-</div>
-<div class="flex gap-6 mt-6 md:mt-0">
-<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="https://github.com/Ortholm10/AI-Resume-Generator" target="_blank" rel="noopener noreferrer">GitHub</a>
-<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="#">Privacy Policy</a>
-<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="#">Terms of Service</a>
-<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="#">Contact</a>
-</div>
-</footer>
-<script>
-        // Scroll reveal logic
-        const reveals = document.querySelectorAll('.reveal');
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ResumeAI — a resume builder that asks before it writes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  html { scroll-behavior: smooth; background: #F4F6FA; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: Poppins, Inter, Helvetica, Arial, sans-serif; background: #F4F6FA; color: #0F2A4A; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #33507A; text-decoration: none; }
+  a:hover { color: #C9603A; }
+  ::selection { background: rgba(108,155,240,0.35); color: #0F2A4A; }
+  @keyframes dotPulse { 0%, 100% { opacity: 0.25; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</helmet>
 
-        function revealOnScroll() {
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 100;
+<div style="background: #F4F6FA; color: #0F2A4A; min-height: 100vh; overflow-x: hidden">
 
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add('active');
-                }
-            }
-        }
+  <header style="position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px clamp(16px, 4vw, 48px); max-width: 1400px; margin: 0 auto">
+    <div style="display: flex; align-items: baseline; gap: 10px">
+      <span style="font-size: 17px; font-weight: 600; letter-spacing: -0.01em; color: #0F2A4A">Resume<span style="color: #1B5FD9">AI</span></span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(15,42,74,0.45)">built on gemini</span>
+    </div>
+    <nav style="display: flex; align-items: center; gap: clamp(14px, 2.2vw, 30px); flex-wrap: wrap; justify-content: flex-end">
+      <a href="#how" style="font-size: 13.5px; color: rgba(15,42,74,0.66)">How it writes</a>
+      <a href="#templates" style="font-size: 13.5px; color: rgba(15,42,74,0.66)">Templates</a>
+      <a href="#fields" style="font-size: 13.5px; color: rgba(15,42,74,0.66)">Fields</a>
+      <a href="#free" style="display: inline-flex; align-items: center; padding: 10px 18px; border-radius: 12px; font-size: 13.5px; font-weight: 600; color: #F5F8FF; background: #0F2A4A; border: 1px solid #0F2A4A" style-hover="background: #17325C; color: #fff">Start free</a>
+    </nav>
+  </header>
 
-        window.addEventListener('scroll', revealOnScroll);
-        // Trigger once on load
-        revealOnScroll();
-    </script>
+  <section style="padding: clamp(8px, 1.5vw, 18px) clamp(12px, 3vw, 40px) clamp(40px, 5vw, 72px)">
+    <div style="position: relative; max-width: 1400px; margin: 0 auto; border-radius: clamp(20px, 2.4vw, 32px); overflow: hidden; padding: clamp(36px, 5vw, 84px) clamp(22px, 4vw, 68px) clamp(44px, 5.5vw, 88px); background: radial-gradient(115% 85% at 10% 2%, #17325C 0%, rgba(23,50,92,0) 62%), radial-gradient(75% 70% at 90% 8%, rgba(27,95,217,0.5) 0%, rgba(27,95,217,0) 66%), radial-gradient(70% 60% at 62% 104%, rgba(108,155,240,0.28) 0%, rgba(23,15,40,0) 72%), radial-gradient(52% 44% at 34% 74%, rgba(58,35,98,0.7) 0%, rgba(23,15,40,0) 70%), #0B1F3A; box-shadow: 0 30px 70px rgba(15,42,74,0.18)">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: clamp(40px, 5vw, 72px); align-items: center">
 
+        <div style="max-width: 620px">
+          <div style="display: inline-flex; align-items: center; gap: 10px; padding: 7px 13px 7px 11px; border-radius: 999px; border: 1px solid rgba(245,135,46,0.4); background: rgba(245,135,46,0.1); margin-bottom: clamp(22px, 3vw, 30px)">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: #F5872E"></span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #F8B27A">FREE — NO ACCOUNT, NO LIMITS</span>
+          </div>
 
-</body></html>
+          <h1 style="margin: 0; font-size: clamp(38px, 5.6vw, 70px); line-height: 1.02; letter-spacing: -0.035em; font-weight: 600; color: #F5F8FF; text-wrap: pretty">A resume builder that <em style="font-family: Newsreader, Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; color: #F5872E">asks</em> before it writes.</h1>
+
+          <p style="margin: clamp(20px, 2.6vw, 28px) 0 0; font-size: clamp(16px, 1.3vw, 18.5px); line-height: 1.6; color: rgba(232,240,253,0.76); max-width: 52ch; text-wrap: pretty">Most AI resume tools take “helped with marketing stuff” and hand back invented numbers. ResumeAI asks you three specific questions first, then writes bullet points from your actual answers. If you don't have a metric, it writes the line without one.</p>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(28px, 3.4vw, 38px)">
+            <a href="https://cv-madgenius-ai.streamlit.app/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 14px; font-size: 15px; font-weight: 600; color: #2A1400; background: linear-gradient(180deg, #FFA857 0%, #F5872E 100%); border: 1px solid rgba(255,209,163,0.7); box-shadow: 0 10px 28px rgba(245,135,46,0.3)" style-hover="box-shadow: 0 14px 34px rgba(245,135,46,0.45); color: #1F0F00">Build my resume — free</a>
+            <a href="#templates" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 22px; border-radius: 14px; font-size: 15px; font-weight: 600; color: #F0F6FF; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.25); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(15,42,74,0.4)" style-hover="background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.42); color: #fff">See both templates</a>
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 8px 26px; margin-top: clamp(28px, 3.4vw, 40px); font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.04em; color: rgba(232,240,253,0.48)">
+            <span>PDF + DOCX EXPORT</span>
+            <span>LIVE IN-BROWSER PREVIEW</span>
+            <span>2 TEMPLATES</span>
+          </div>
+        </div>
+
+        <div style="justify-self: center; width: 100%; max-width: 520px">
+          <div style="position: relative; border-radius: 20px; padding: clamp(18px, 2.4vw, 26px); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: 0 24px 60px rgba(15,9,26,0.55), inset 0 1px 0 rgba(255,255,255,0.12)">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(232,240,253,0.55)">Experience · bullet 1 of 3</span>
+              <span style="display: flex; gap: 5px">
+                <span style="width: 22px; height: 3px; border-radius: 2px; background: #6C9BF0"></span>
+                <span style="width: 22px; height: 3px; border-radius: 2px; background: rgba(232,240,253,0.22)"></span>
+                <span style="width: 22px; height: 3px; border-radius: 2px; background: rgba(232,240,253,0.22)"></span>
+              </span>
+            </div>
+
+            <label style="display: block; font-size: 12.5px; font-weight: 500; letter-spacing: 0.01em; color: rgba(232,240,253,0.72); margin-bottom: 9px">Describe your role</label>
+
+            <div style="position: relative; min-height: 96px; border-radius: 14px; padding: 14px 16px; background: rgba(8,20,38,0.55); border: 1px solid rgba(232,240,253,{{ fieldBorder }}); box-shadow: 0 0 {{ glowBlur }}px rgba(108,155,240,{{ glowAlpha }}), inset 0 1px 0 rgba(255,255,255,0.04); transition: border-color 120ms linear">
+              <p style="position: absolute; left: 16px; right: 16px; top: 14px; margin: 0; font-size: 14.5px; line-height: 1.5; color: rgba(232,240,253,0.9); opacity: {{ vagueOpacity }}">{{ typed }}<span style="display: inline-block; width: 1.5px; height: 15px; margin-left: 1px; vertical-align: -2px; background: #6C9BF0; opacity: {{ caretOpacity }}"></span></p>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: #F7FAFF; font-weight: 500; opacity: {{ resultOpacity }}; transform: translateY({{ resultY }}px)">Managed social media campaigns that grew engagement by 40% across three platforms</p>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; min-height: 42px">
+              <div style="display: flex; align-items: center; gap: 9px; font-size: 12.5px; color: rgba(232,240,253,0.62); opacity: {{ statusOpacity }}">
+                <span style="display: flex; gap: 4px">
+                  <span style="width: 5px; height: 5px; border-radius: 50%; background: #6C9BF0; animation: dotPulse 1s ease-in-out infinite"></span>
+                  <span style="width: 5px; height: 5px; border-radius: 50%; background: #6C9BF0; animation: dotPulse 1s ease-in-out 0.15s infinite"></span>
+                  <span style="width: 5px; height: 5px; border-radius: 50%; background: #6C9BF0; animation: dotPulse 1s ease-in-out 0.3s infinite"></span>
+                </span>
+                <span>{{ statusText }}</span>
+              </div>
+              <button type="button" style="display: inline-flex; align-items: center; gap: 8px; padding: 11px 17px; border-radius: 12px; font-family: Poppins, Inter, sans-serif; font-size: 13.5px; font-weight: 600; color: #FFFFFF; cursor: pointer; background: rgba(255,255,255,{{ btnAlpha }}); border: 1px solid rgba(255,255,255,{{ btnBorder }}); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(15,42,74,0.4); transform: scale({{ btnScale }}); transition: transform 120ms ease, background 160ms linear">Enhance with AI</button>
+            </div>
+          </div>
+          <p style="margin: 14px 2px 0; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: rgba(232,240,253,0.4)">↑ the real flow, at real speed</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" style="padding: clamp(48px, 7vw, 104px) clamp(20px, 5vw, 72px)">
+    <div style="max-width: 1120px; margin: 0 auto">
+      <div data-reveal="1" style="max-width: 620px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #1B5FD9">01 — the clarifying questions</span>
+        <h2 style="margin: 16px 0 0; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -0.028em; font-weight: 600; color: #0F2A4A; text-wrap: pretty">Honesty is a <em style="font-family: Newsreader, Georgia, serif; font-style: italic; font-weight: 400">mechanic</em>, not a promise.</h2>
+        <p style="margin: 18px 0 0; font-size: 16.5px; line-height: 1.6; color: rgba(15,42,74,0.66)">Here is the exchange behind the animation above — nothing in the final bullet came from anywhere but your answers.</p>
+      </div>
+
+      <div style="margin-top: clamp(34px, 4vw, 52px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px; align-items: start">
+        <div data-reveal="1" data-reveal-delay="60" style="border-radius: 18px; padding: 22px; background: #FFFFFF; border: 1px solid rgba(15,42,74,0.1); box-shadow: 0 1px 2px rgba(15,42,74,0.05)">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; color: rgba(15,42,74,0.45)">YOU TYPE</span>
+          <p style="margin: 12px 0 0; font-size: 15px; line-height: 1.55; color: rgba(15,42,74,0.85)">“helped with marketing stuff”</p>
+          <p style="margin: 16px 0 0; font-size: 13px; line-height: 1.55; color: rgba(15,42,74,0.5)">A generic tool would ship a bullet from this. There isn't one in here yet.</p>
+        </div>
+
+        <div data-reveal="1" data-reveal-delay="140" style="border-radius: 18px; padding: 22px; background: linear-gradient(165deg, rgba(27,95,217,0.1) 0%, rgba(23,50,92,0.07) 100%); border: 1px solid rgba(27,95,217,0.3)">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; color: #164FB5">RESUMEAI ASKS</span>
+          <div style="display: grid; gap: 10px; margin-top: 14px">
+            <p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: #14294A">1. Which platforms did you post on?</p>
+            <p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: #14294A">2. Over how long, and were you leading or assisting?</p>
+            <p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: #14294A">3. Did anything measurable change?</p>
+          </div>
+          <p style="margin: 16px 0 0; font-size: 13px; line-height: 1.55; color: rgba(15,42,74,0.6)">You answer: Instagram, X, LinkedIn · six months · ran the calendar myself · engagement up ~40%.</p>
+        </div>
+
+        <div data-reveal="1" data-reveal-delay="220" style="border-radius: 18px; padding: 22px; background: rgba(245,135,46,0.08); border: 1px solid rgba(245,135,46,0.34)">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; color: #B45A12">WHAT LANDS ON THE PAGE</span>
+          <p style="margin: 12px 0 0; font-size: 15px; line-height: 1.55; color: #0F2A4A; font-weight: 500">Managed social media campaigns across Instagram, X and LinkedIn for six months, growing engagement by 40%.</p>
+          <p style="margin: 16px 0 0; font-size: 13px; line-height: 1.55; color: rgba(15,42,74,0.55)">No number in your answers? The bullet ships without one. It will not guess 40%.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="templates" style="padding: clamp(48px, 7vw, 104px) clamp(20px, 5vw, 72px); border-top: 1px solid rgba(15,42,74,0.09)">
+    <div style="max-width: 1120px; margin: 0 auto">
+      <div data-reveal="1" style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; justify-content: space-between">
+        <div style="max-width: 560px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #1B5FD9">02 — two templates, live preview</span>
+          <h2 style="margin: 16px 0 0; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -0.028em; font-weight: 600; color: #0F2A4A">Switch templates and watch the page change.</h2>
+          <p style="margin: 18px 0 0; font-size: 16.5px; line-height: 1.6; color: rgba(15,42,74,0.66)">The preview below is the same preview you get in the builder — real type, real bullet spacing, rendered before you export anything.</p>
+        </div>
+        <div style="display: inline-flex; padding: 5px; gap: 4px; border-radius: 14px; background: #FFFFFF; border: 1px solid rgba(15,42,74,0.12); box-shadow: 0 1px 2px rgba(15,42,74,0.05)">
+          <button type="button" onClick="{{ pickClassic }}" style="padding: 10px 18px; border-radius: 10px; border: 1px solid {{ classicBorder }}; background: {{ classicBg }}; color: {{ classicColor }}; font-family: Poppins, Inter, sans-serif; font-size: 13.5px; font-weight: 600; cursor: pointer">Classic</button>
+          <button type="button" onClick="{{ pickPro }}" style="padding: 10px 18px; border-radius: 10px; border: 1px solid {{ proBorder }}; background: {{ proBg }}; color: {{ proColor }}; font-family: Newsreader, Georgia, serif; font-size: 15px; font-weight: 500; cursor: pointer">Professional</button>
+        </div>
+      </div>
+
+      <div style="margin-top: clamp(30px, 3.6vw, 44px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: clamp(20px, 2.6vw, 34px); align-items: start">
+
+        <div data-reveal="1" data-reveal-delay="60" style="border-radius: 18px; padding: clamp(14px, 1.6vw, 20px); background: #E3E9F2; border: 1px solid rgba(15,42,74,0.1); box-shadow: 0 18px 44px rgba(15,42,74,0.12)">
+          <div style="opacity: {{ tplOpacity }}; transform: translateY({{ tplY }}px); transition: opacity 280ms cubic-bezier(.4,0,.2,1), transform 280ms cubic-bezier(.4,0,.2,1)">
+          <sc-if value="{{ isClassic }}" hint-placeholder-val="{{ true }}">
+            <div style="background: #FFFFFF; color: #14131f; border-radius: 8px; padding: clamp(22px, 3vw, 34px); font-family: Inter, Helvetica, Arial, sans-serif">
+              <p style="margin: 0; font-size: 21px; font-weight: 700; letter-spacing: -0.01em">PRIYA RAMESH</p>
+              <p style="margin: 6px 0 0; font-size: 11px; color: #46445c; letter-spacing: 0.01em">priya.ramesh@email.com · +91 98765 43210 · github.com/priyar · linkedin.com/in/priyaramesh</p>
+              <p style="margin: 22px 0 0; font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; color: #14131f; border-bottom: 1px solid #14131f; padding-bottom: 5px">EXPERIENCE</p>
+              <div style="display: flex; justify-content: space-between; gap: 12px; margin-top: 12px">
+                <p style="margin: 0; font-size: 12.5px; font-weight: 600">Marketing Associate, Loom Studio</p>
+                <p style="margin: 0; font-size: 11px; color: #46445c; white-space: nowrap">2024 — 2025</p>
+              </div>
+              <ul style="margin: 8px 0 0; padding-left: 17px; display: grid; gap: 5px">
+                <li style="font-size: 12px; line-height: 1.5; color: #23222e">Managed social media campaigns across Instagram, X and LinkedIn for six months, growing engagement by 40%.</li>
+                <li style="font-size: 12px; line-height: 1.5; color: #23222e">Built the monthly content calendar and briefed two freelance designers.</li>
+              </ul>
+              <p style="margin: 20px 0 0; font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; border-bottom: 1px solid #14131f; padding-bottom: 5px">PROJECTS</p>
+              <p style="margin: 12px 0 0; font-size: 12.5px; font-weight: 600">Ledger — expense splitter <span style="font-weight: 400; color: #46445c">· React, Supabase</span></p>
+              <p style="margin: 20px 0 0; font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; border-bottom: 1px solid #14131f; padding-bottom: 5px">EDUCATION</p>
+              <p style="margin: 12px 0 0; font-size: 12.5px; font-weight: 600">B.Com, Christ University <span style="font-weight: 400; color: #46445c">· CGPA 8.6 / 10</span></p>
+            </div>
+            <p style="margin: 14px 4px 2px; font-size: 13px; line-height: 1.55; color: rgba(15,42,74,0.62)"><strong style="color: #0F2A4A; font-weight: 600">Classic.</strong> One column, no tables, no text in graphics — the layout applicant tracking systems parse without dropping a line.</p>
+          </sc-if>
+          <sc-if value="{{ isPro }}" hint-placeholder-val="{{ false }}">
+            <div style="background: #FFFDF8; color: #191723; border-radius: 8px; padding: clamp(22px, 3vw, 34px); font-family: Newsreader, Georgia, serif">
+              <p style="margin: 0; font-size: 27px; font-weight: 400; letter-spacing: -0.015em">Priya Ramesh</p>
+              <p style="margin: 7px 0 0; font-family: Inter, sans-serif; font-size: 10.5px; letter-spacing: 0.05em; color: #5a5568; text-transform: uppercase">priya.ramesh@email.com · github.com/priyar · priyar.dev</p>
+              <div style="height: 1px; background: #cfc7bb; margin: 20px 0 0"></div>
+              <p style="margin: 18px 0 0; font-family: Inter, sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; color: #6b6478">EXPERIENCE</p>
+              <div style="display: flex; justify-content: space-between; gap: 12px; margin-top: 11px">
+                <p style="margin: 0; font-size: 15px; font-weight: 500">Marketing Associate, Loom Studio</p>
+                <p style="margin: 0; font-family: Inter, sans-serif; font-size: 10.5px; color: #6b6478; white-space: nowrap; padding-top: 4px">2024 — 2025</p>
+              </div>
+              <ul style="margin: 8px 0 0; padding-left: 16px; display: grid; gap: 6px">
+                <li style="font-size: 13.5px; line-height: 1.55">Managed social media campaigns across Instagram, X and LinkedIn for six months, growing engagement by 40%.</li>
+                <li style="font-size: 13.5px; line-height: 1.55">Built the monthly content calendar and briefed two freelance designers.</li>
+              </ul>
+              <p style="margin: 20px 0 0; font-family: Inter, sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; color: #6b6478">PROJECTS</p>
+              <p style="margin: 11px 0 0; font-size: 15px; font-weight: 500">Ledger — expense splitter <span style="font-family: Inter, sans-serif; font-size: 11.5px; color: #6b6478">React, Supabase</span></p>
+              <p style="margin: 20px 0 0; font-family: Inter, sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; color: #6b6478">EDUCATION</p>
+              <p style="margin: 11px 0 0; font-size: 15px; font-weight: 500">B.Com, Christ University <span style="font-family: Inter, sans-serif; font-size: 11.5px; color: #6b6478">CGPA 8.6 / 10</span></p>
+            </div>
+            <p style="margin: 14px 4px 2px; font-size: 13px; line-height: 1.55; color: rgba(15,42,74,0.62)"><strong style="color: #0F2A4A; font-weight: 600">Professional.</strong> Newsreader for names and roles, letterspaced sans section labels, hanging bullets — typography for a human reader, still a single parseable column.</p>
+          </sc-if>
+          </div>
+        </div>
+
+        <div style="display: grid; gap: 18px">
+          <div data-reveal="1" data-reveal-delay="140" style="border-radius: 18px; padding: 24px; background: #FFFFFF; border: 1px solid rgba(15,42,74,0.1); box-shadow: 0 1px 2px rgba(15,42,74,0.05)">
+            <p style="margin: 0; font-size: 18px; font-weight: 600; color: #0F2A4A; letter-spacing: -0.015em">Export the file the recruiter asked for</p>
+            <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: rgba(15,42,74,0.66)">Portals want PDF. Recruiters and campus placement cells often want an editable Word file. You get both from the same preview — same content, same template, no watermark.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px">
+              <span style="display: inline-flex; align-items: center; gap: 9px; padding: 12px 18px; border-radius: 13px; font-size: 14px; font-weight: 600; color: #F5F8FF; background: #0F2A4A; border: 1px solid #0F2A4A"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; color: #9CC0FF">.PDF</span> Download</span>
+              <span style="display: inline-flex; align-items: center; gap: 9px; padding: 12px 18px; border-radius: 13px; font-size: 14px; font-weight: 600; color: #0F2A4A; background: transparent; border: 1px solid rgba(15,42,74,0.2)"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; color: #164FB5">.DOCX</span> Download</span>
+            </div>
+          </div>
+          <div data-reveal="1" data-reveal-delay="220" style="border-radius: 18px; padding: 24px; background: #FFFFFF; border: 1px solid rgba(15,42,74,0.1); box-shadow: 0 1px 2px rgba(15,42,74,0.05)">
+            <p style="margin: 0; font-size: 18px; font-weight: 600; color: #0F2A4A; letter-spacing: -0.015em">A guided build, not a blank page</p>
+            <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: rgba(15,42,74,0.66)">Six steps, one subject at a time, with a progress bar that tells you what's left. You can jump back to any finished step without losing the rest.</p>
+            <div style="display: flex; align-items: center; gap: 10px; margin-top: 20px">
+              <span style="flex: 1; height: 5px; border-radius: 3px; background: rgba(15,42,74,0.1); overflow: hidden"><span style="display: block; width: 66%; height: 100%; border-radius: 3px; background: linear-gradient(90deg, #17325C 0%, #1B5FD9 100%)"></span></span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(15,42,74,0.55); white-space: nowrap">STEP 4 / 6 · PROJECTS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fields" style="padding: clamp(48px, 7vw, 104px) clamp(20px, 5vw, 72px); border-top: 1px solid rgba(15,42,74,0.09)">
+    <div style="max-width: 1120px; margin: 0 auto">
+      <div data-reveal="1" style="max-width: 640px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #1B5FD9">03 — the fields you actually need</span>
+        <h2 style="margin: 16px 0 0; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -0.028em; font-weight: 600; color: #0F2A4A; text-wrap: pretty">Most builders were designed for someone with ten years of experience.</h2>
+        <p style="margin: 18px 0 0; font-size: 16.5px; line-height: 1.6; color: rgba(15,42,74,0.66)">If you're in school, or shipping side projects, or your best work lives on GitHub, the standard form fights you. These three don't.</p>
+      </div>
+
+      <div style="margin-top: clamp(32px, 4vw, 48px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 18px; align-items: start">
+
+        <div data-reveal="1" data-reveal-delay="60" style="border-radius: 20px; padding: 26px; background: linear-gradient(160deg, #14294A 0%, #0B1F3A 100%); border: 1px solid rgba(15,42,74,0.14); box-shadow: 0 18px 40px rgba(15,42,74,0.16)">
+          <p style="margin: 0; font-size: 19px; font-weight: 600; color: #F5F8FF; letter-spacing: -0.015em">Education that knows school from college</p>
+          <p style="margin: 10px 0 22px; font-size: 14.5px; line-height: 1.6; color: rgba(232,240,253,0.7)">Pick one and the fields change. No “Major” box on a Class 12 entry, no “Board” box on a degree. Grade and GPA are optional — leave them blank and they don't print.</p>
+          <div style="display: inline-flex; padding: 4px; gap: 4px; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14)">
+            <button type="button" onClick="{{ pickSchool }}" style="padding: 9px 16px; border-radius: 9px; border: 1px solid {{ schoolBorder }}; background: {{ schoolBg }}; color: {{ schoolColor }}; font-family: Poppins, Inter, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">School</button>
+            <button type="button" onClick="{{ pickCollege }}" style="padding: 9px 16px; border-radius: 9px; border: 1px solid {{ collegeBorder }}; background: {{ collegeBg }}; color: {{ collegeColor }}; font-family: Poppins, Inter, sans-serif; font-size: 13px; font-weight: 600; cursor: pointer">College</button>
+          </div>
+          <div style="margin-top: 18px; display: grid; gap: 10px; opacity: {{ eduOpacity }}; transform: translateY({{ eduY }}px); transition: opacity 240ms cubic-bezier(.4,0,.2,1), transform 240ms cubic-bezier(.4,0,.2,1)">
+            <sc-for list="{{ eduFields }}" as="f" hint-placeholder-count="4">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 14px; border-radius: 11px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1)">
+                <span style="font-size: 12.5px; color: rgba(232,240,253,0.6)">{{ f.label }}</span>
+                <span style="font-size: 13px; color: #EAF1FD; font-weight: 500; text-align: right">{{ f.value }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display: grid; gap: 18px">
+          <div data-reveal="1" data-reveal-delay="140" style="border-radius: 20px; padding: 26px; background: #FFFFFF; border: 1px solid rgba(15,42,74,0.1); box-shadow: 0 1px 2px rgba(15,42,74,0.05)">
+            <p style="margin: 0; font-size: 19px; font-weight: 600; color: #0F2A4A; letter-spacing: -0.015em">Projects get their own section</p>
+            <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: rgba(15,42,74,0.66)">Not squeezed into “Experience”. Each project takes a title, a stack, a link, and the same clarifying questions — so “made an app” becomes something a reviewer can picture.</p>
+            <div style="margin-top: 18px; padding: 16px; border-radius: 13px; background: #EDF1F7; border: 1px solid rgba(15,42,74,0.08)">
+              <p style="margin: 0; font-size: 14px; font-weight: 600; color: #0F2A4A">Ledger — expense splitter</p>
+              <p style="margin: 7px 0 0; font-size: 13px; line-height: 1.55; color: rgba(15,42,74,0.68)">Built a group expense splitter used by 30 hostel residents; settled balances with a single monthly summary.</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px">
+                <span style="padding: 4px 9px; border-radius: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #33507A; background: rgba(23,50,92,0.07); border: 1px solid rgba(23,50,92,0.16)">React</span>
+                <span style="padding: 4px 9px; border-radius: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #33507A; background: rgba(23,50,92,0.07); border: 1px solid rgba(23,50,92,0.16)">Supabase</span>
+                <span style="padding: 4px 9px; border-radius: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #33507A; background: rgba(23,50,92,0.07); border: 1px solid rgba(23,50,92,0.16)">Tailwind</span>
+              </div>
+            </div>
+          </div>
+
+          <div data-reveal="1" data-reveal-delay="220" style="border-radius: 20px; padding: 26px; background: #FFFFFF; border: 1px solid rgba(15,42,74,0.1); box-shadow: 0 1px 2px rgba(15,42,74,0.05)">
+            <p style="margin: 0; font-size: 19px; font-weight: 600; color: #0F2A4A; letter-spacing: -0.015em">More than one link, and not just LinkedIn</p>
+            <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: rgba(15,42,74,0.66)">Add as many as matter. Each one prints as a clean, clickable label — no raw https:// spilling across the header.</p>
+            <div style="display: grid; gap: 8px; margin-top: 18px">
+              <div style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 11px; background: #EDF1F7; border: 1px solid rgba(15,42,74,0.08)">
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: rgba(15,42,74,0.45); width: 74px; flex: none">GITHUB</span>
+                <span style="font-size: 13px; color: #0F2A4A">github.com/priyar</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 11px; background: #EDF1F7; border: 1px solid rgba(15,42,74,0.08)">
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: rgba(15,42,74,0.45); width: 74px; flex: none">LEETCODE</span>
+                <span style="font-size: 13px; color: #0F2A4A">leetcode.com/u/priyar <span style="color: rgba(15,42,74,0.5)">· 420 solved</span></span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 11px; background: #EDF1F7; border: 1px solid rgba(15,42,74,0.08)">
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: rgba(15,42,74,0.45); width: 74px; flex: none">PORTFOLIO</span>
+                <span style="font-size: 13px; color: #0F2A4A">priyar.dev</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 11px; background: rgba(245,135,46,0.08); border: 1px dashed rgba(245,135,46,0.45)">
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #B45A12; width: 74px; flex: none">+ CERT</span>
+                <span style="font-size: 13px; color: #A04D0F">Certifications, if you have them. Optional.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="free" style="padding: clamp(20px, 3vw, 40px) clamp(12px, 3vw, 40px) clamp(28px, 4vw, 56px)">
+    <div data-reveal="1" style="max-width: 1400px; margin: 0 auto; border-radius: clamp(20px, 2.4vw, 32px); padding: clamp(52px, 7vw, 110px) clamp(22px, 4vw, 68px); text-align: center; background: radial-gradient(90% 120% at 18% 0%, #17325C 0%, rgba(23,50,92,0) 62%), radial-gradient(70% 90% at 86% 100%, rgba(27,95,217,0.42) 0%, rgba(27,95,217,0) 68%), #0B1F3A; box-shadow: 0 30px 70px rgba(15,42,74,0.18)">
+      <h2 style="margin: 0 auto; max-width: 22ch; font-size: clamp(30px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -0.03em; font-weight: 600; color: #F5F8FF; text-wrap: pretty">Free. No account, no export cap, no <em style="font-family: Newsreader, Georgia, serif; font-style: italic; font-weight: 400">upgrade</em> screen.</h2>
+      <p style="margin: 20px auto 0; max-width: 58ch; font-size: 16.5px; line-height: 1.65; color: rgba(232,240,253,0.74)">Open it, answer the questions, export your PDF and DOCX. Nothing is held back for a paid tier, because there isn't one. Your answers go to Google Gemini to be written up, and the resume itself is built and previewed in your browser.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 34px">
+        <a href="https://cv-madgenius-ai.streamlit.app/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; padding: 16px 28px; border-radius: 14px; font-size: 15.5px; font-weight: 600; color: #2A1400; background: linear-gradient(180deg, #FFA857 0%, #F5872E 100%); border: 1px solid rgba(255,209,163,0.7); box-shadow: 0 10px 28px rgba(245,135,46,0.3)" style-hover="box-shadow: 0 14px 34px rgba(245,135,46,0.45); color: #1F0F00">Start with the first question</a>
+        <a href="#how" style="display: inline-flex; align-items: center; padding: 16px 24px; border-radius: 14px; font-size: 15.5px; font-weight: 600; color: #F0F6FF; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.25); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(15,42,74,0.4)" style-hover="background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.42); color: #fff">Read how it writes</a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding: 30px clamp(20px, 5vw, 72px) 48px">
+    <div style="max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between">
+      <span style="font-size: 13.5px; color: rgba(15,42,74,0.5)">ResumeAI — resumes written from your answers.</span>
+      <div style="display: flex; flex-wrap: wrap; gap: 20px">
+        <a href="#how" style="font-size: 13px; color: rgba(15,42,74,0.6)">How it writes</a>
+        <a href="#templates" style="font-size: 13px; color: rgba(15,42,74,0.6)">Templates</a>
+        <a href="#fields" style="font-size: 13px; color: rgba(15,42,74,0.6)">Fields</a>
+        <a href="#free" style="font-size: 13px; color: rgba(15,42,74,0.6)">Start free</a>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;loopSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.6,&quot;max&quot;:1.6,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero animation&quot;},&quot;animateHero&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero animation&quot;},&quot;defaultTemplate&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;classic&quot;,&quot;options&quot;:[&quot;classic&quot;,&quot;professional&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Templates&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { t: 0, tpl: props.defaultTemplate === 'professional' ? 'pro' : 'classic', edu: 'college', narrow: false };
+  }
+
+  componentDidMount() {
+    this.t0 = performance.now();
+    this.onResize = () => {
+      const n = window.innerWidth < 720;
+      if (n !== this.state.narrow) this.setState({ narrow: n });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+    this.timer = setInterval(() => {
+      if (this.props.animateHero === false) return;
+      this.setState({ t: performance.now() - this.t0 });
+    }, 40);
+    setTimeout(() => this.initReveal(), 60);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    window.removeEventListener('resize', this.onResize);
+    if (this.onScroll) {
+      window.removeEventListener('scroll', this.onScroll);
+      window.removeEventListener('hashchange', this.onScroll);
+    }
+    if (this.onPrint) window.removeEventListener('beforeprint', this.onPrint);
+    clearTimeout(this.failSafe);
+    clearTimeout(this.swapTimer);
+    clearTimeout(this.backTimer);
+    if (this.io) this.io.disconnect();
+  }
+
+  // Reveal-on-scroll: hide only what starts below the fold, so above-fold content never flashes.
+  show(el) {
+    if (!el || el.dataset.revealDone) return;
+    el.dataset.revealDone = '1';
+    el.style.transitionDelay = (el.getAttribute('data-reveal-delay') || 0) + 'ms';
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+    setTimeout(() => { el.style.willChange = 'auto'; }, 1100);
+    if (this.io) this.io.unobserve(el);
+  }
+
+  revealAll() {
+    (this.pending || []).forEach(el => this.show(el));
+  }
+
+  initReveal() {
+    if (this.io || !('IntersectionObserver' in window)) return;
+    const mm = q => window.matchMedia && window.matchMedia(q).matches;
+    // Never hide anything when motion is reduced, when printing, or when this frame isn't visibly rendering.
+    if (mm('(prefers-reduced-motion: reduce)') || mm('print') || document.visibilityState !== 'visible') return;
+    const pending = Array.from(document.querySelectorAll('[data-reveal]'));
+    if (!pending.length) return;
+    this.pending = pending;
+    const ease = 'cubic-bezier(.22,.61,.36,1)';
+    pending.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(34px)';
+      el.style.transition = 'opacity 900ms ' + ease + ', transform 900ms ' + ease;
+      el.style.willChange = 'opacity, transform';
+    });
+    // Anything already on screen animates in on load, staggered, instead of appearing pre-revealed.
+    const fold = window.innerHeight * 0.9;
+    const onLoad = pending.filter(el => el.getBoundingClientRect().top < fold);
+    onLoad.forEach((el, n) => setTimeout(() => this.show(el), 120 + n * 110));
+
+    this.io = new IntersectionObserver(entries => {
+      this.ioAlive = true;
+      entries.forEach(entry => { if (entry.isIntersecting) this.show(entry.target); });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.06 });
+    pending.forEach(el => this.io.observe(el));
+
+    // Belt and braces: a scroll fallback, a print escape, and a deadline that un-hides
+    // everything if the observer never delivered a callback in this environment.
+    this.onScroll = () => {
+      const vh = window.innerHeight;
+      (this.pending || []).forEach(el => {
+        if (el.getBoundingClientRect().top < vh * 0.92) this.show(el);
+      });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('hashchange', this.onScroll);
+    this.onPrint = () => this.revealAll();
+    window.addEventListener('beforeprint', this.onPrint);
+    this.failSafe = setTimeout(() => { if (!this.ioAlive) this.revealAll(); }, 2500);
+  }
+
+  // Fade the panel out, swap contents at the bottom of the fade, fade back in.
+  crossfade(key, value) {
+    const animKey = key + 'Anim';
+    if (this.state[key] === value || this.state[animKey]) return;
+    this.setState({ [animKey]: true });
+    this.swapTimer = setTimeout(() => {
+      this.setState({ [key]: value });
+      this.backTimer = setTimeout(() => this.setState({ [animKey]: false }), 40);
+    }, 210);
+  }
+
+  // phases: 0 empty · 1 typing · 2 pause · 3 press · 4 thinking · 5 reveal · 6 hold · 7 fade
+  frame() {
+    const speed = this.props.loopSpeed ?? 1;
+    const D = [400, 1500, 300, 400, 1200, 1000, 2000, 600].map(d => d / speed);
+    if (this.props.animateHero === false) return { i: 6, x: 0, D };
+    const total = D.reduce((a, b) => a + b, 0);
+    let x = this.state.t % total, i = 0;
+    while (i < D.length - 1 && x >= D[i]) { x -= D[i]; i++; }
+    return { i, x, D };
+  }
+
+  renderVals() {
+    const vague = 'helped with marketing stuff';
+    const { i, x, D } = this.frame();
+    const narrow = this.state.narrow;
+    const clamp01 = v => Math.max(0, Math.min(1, v));
+
+    const typedLen = i === 0 ? 0 : i === 1 ? Math.round(vague.length * clamp01(x / D[1])) : vague.length;
+    const revealP = i === 5 ? clamp01(x / D[5]) : 0;
+    const resultOpacity = i === 5 ? clamp01((revealP - 0.3) / 0.5) : i === 6 ? 1 : i === 7 ? 1 - clamp01(x / D[7]) : 0;
+    const vagueOpacity = i < 5 ? 1 : i === 5 ? 1 - clamp01(revealP / 0.45) : 0;
+    const pressP = i === 3 ? clamp01(x / D[3]) : 0;
+    const pressed = i === 3 && pressP < 0.65;
+    const thinkPulse = 0.5 + 0.5 * Math.sin((x / 1000) * Math.PI * 2.4);
+
+    const onLight = { bg: '#0F2A4A', border: '#0F2A4A', color: '#F5F8FF' };
+    const offLight = { bg: 'transparent', border: 'rgba(15,42,74,0.14)', color: 'rgba(15,42,74,0.6)' };
+    const onDark = { bg: 'rgba(255,255,255,0.92)', border: 'rgba(255,255,255,0.92)', color: '#0F2A4A' };
+    const offDark = { bg: 'transparent', border: 'rgba(255,255,255,0.16)', color: 'rgba(232,240,253,0.65)' };
+
+    const isClassic = this.state.tpl === 'classic';
+    const c = isClassic ? onLight : offLight, p = isClassic ? offLight : onLight;
+    const isSchool = this.state.edu === 'school';
+    const s = isSchool ? onDark : offDark, col = isSchool ? offDark : onDark;
+
+    const eduFields = isSchool
+      ? [
+          { label: 'School', value: 'Delhi Public School, Bengaluru' },
+          { label: 'Board', value: 'CBSE' },
+          { label: 'Class', value: 'XII · Commerce' },
+          { label: 'Percentage (optional)', value: '92.4%' }
+        ]
+      : [
+          { label: 'College', value: 'Christ University' },
+          { label: 'Degree', value: 'B.Com' },
+          { label: 'Major', value: 'Finance & Analytics' },
+          { label: 'CGPA (optional)', value: '8.6 / 10' }
+        ];
+
+    return {
+      typed: vague.slice(0, typedLen),
+      caretOpacity: i <= 2 ? (Math.floor(this.state.t / 480) % 2 ? 0.25 : 1) : 0,
+      vagueOpacity: vagueOpacity.toFixed(2),
+      resultOpacity: resultOpacity.toFixed(2),
+      resultY: ((1 - resultOpacity) * 12).toFixed(1),
+      fieldBorder: (i === 4 ? 0.14 + 0.2 * thinkPulse : 0.14).toFixed(3),
+      glowBlur: i === 4 ? (narrow ? 12 : 22) : 0,
+      glowAlpha: (i === 4 ? (narrow ? 0.24 : 0.18 + 0.26 * thinkPulse) : 0).toFixed(3),
+      btnAlpha: (pressed ? 0.2 : 0.1).toFixed(2),
+      btnBorder: (pressed ? 0.45 : 0.25).toFixed(2),
+      btnScale: pressed ? 0.965 : 1,
+      statusOpacity: i === 4 ? 1 : 0,
+      statusText: 'asking 3 clarifying questions',
+
+      isClassic: isClassic,
+      isPro: !isClassic,
+      classicBg: c.bg, classicBorder: c.border, classicColor: c.color,
+      proBg: p.bg, proBorder: p.border, proColor: p.color,
+      tplOpacity: this.state.tplAnim ? 0 : 1,
+      tplY: this.state.tplAnim ? 10 : 0,
+      eduOpacity: this.state.eduAnim ? 0 : 1,
+      eduY: this.state.eduAnim ? 8 : 0,
+      pickClassic: () => this.crossfade('tpl', 'classic'),
+      pickPro: () => this.crossfade('tpl', 'pro'),
+
+      eduFields: eduFields,
+      schoolBg: s.bg, schoolBorder: s.border, schoolColor: s.color,
+      collegeBg: col.bg, collegeBorder: col.border, collegeColor: col.color,
+      pickSchool: () => this.crossfade('edu', 'school'),
+      pickCollege: () => this.crossfade('edu', 'college')
+    };
+  }
+}
+</script>
+</body>
+</html>
