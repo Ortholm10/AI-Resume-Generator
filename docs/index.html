@@ -1,0 +1,368 @@
+<!DOCTYPE html><html lang="en" style="scroll-behavior: smooth;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>ResumeAI - Resumes that don't lie for you.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#855300",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-secondary-fixed-variant": "#653e00",
+                        "error-container": "#ffdad6",
+                        "on-background": "#0d1b36",
+                        "surface": "#faf8ff",
+                        "inverse-surface": "#23304d",
+                        "tertiary-container": "#006e4b",
+                        "surface-dim": "#cdd9fe",
+                        "outline-variant": "#c7c4d8",
+                        "secondary-fixed-dim": "#ffb95f",
+                        "surface-container-highest": "#d9e2ff",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "secondary-container": "#fea619",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#0d1b36",
+                        "surface-tint": "#4d44e3",
+                        "on-surface-variant": "#464555",
+                        "secondary-fixed": "#ffddb8",
+                        "primary-fixed": "#e2dfff",
+                        "on-tertiary-fixed": "#002113",
+                        "on-primary-fixed": "#0f0069",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-tertiary-container": "#67f4b7",
+                        "tertiary": "#005338",
+                        "background": "#faf8ff",
+                        "primary": "#3525cd",
+                        "surface-container-low": "#f2f3ff",
+                        "on-primary-container": "#dad7ff",
+                        "inverse-on-surface": "#edf0ff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#e9edff",
+                        "on-secondary-container": "#684000",
+                        "surface-container-high": "#e1e8ff",
+                        "surface-bright": "#faf8ff",
+                        "surface-variant": "#d9e2ff",
+                        "inverse-primary": "#c3c0ff",
+                        "primary-container": "#4f46e5",
+                        "error": "#ba1a1a",
+                        "outline": "#777587",
+                        "on-secondary-fixed": "#2a1700",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap-mobile": "64px",
+                        "grid-margin": "24px",
+                        "section-gap-desktop": "120px",
+                        "container-max": "1200px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "display-accent": ["Noto Serif"],
+                        "label-caps": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-accent": ["64px", { "lineHeight": "1.1", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.2", "fontWeight": "800" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "headline-md": ["36px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    },
+                    "animation": {
+                        "fade-in-up": "fadeInUp 0.8s ease-out forwards",
+                        "blob": "blob 7s infinite"
+                    },
+                    "keyframes": {
+                        "fadeInUp": {
+                            "0%": { opacity: "0", transform: "translateY(20px)" },
+                            "100%": { opacity: "1", transform: "translateY(0)" }
+                        },
+                        "blob": {
+                            "0%": { transform: "translate(0px, 0px) scale(1)" },
+                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                            "100%": { transform: "translate(0px, 0px) scale(1)" }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+        }
+        .perspective-tilt {
+            transition: transform 0.5s ease;
+            transform-style: preserve-3d;
+        }
+        .perspective-tilt:hover {
+            transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) scale3d(1.02, 1.02, 1.02);
+            box-shadow: 0 25px 50px -12px rgba(79, 70, 229, 0.15);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-xl fixed top-0 w-full z-50 shadow-sm border-b border-outline-variant/30 dark:border-outline/20 transition-all duration-300 ease-in-out">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-grid-margin h-20">
+<a class="font-display-lg text-headline-sm font-extrabold text-primary dark:text-primary-fixed-dim tracking-tight" href="#">ResumeAI</a>
+<div class="hidden md:flex gap-8">
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md hover:scale-105 transition-transform duration-200" href="#features">Features</a>
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md hover:scale-105 transition-transform duration-200" href="#templates">Templates</a>
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md hover:scale-105 transition-transform duration-200" href="#pricing">Pricing</a>
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-body-md text-body-md hover:scale-105 transition-transform duration-200" href="#about">About</a>
+</div>
+<div class="flex items-center gap-4">
+<a class="hidden md:block text-on-surface-variant hover:text-primary font-body-md text-body-md transition-colors" href="#">Login</a>
+<a class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-body-md text-body-md hover:scale-105 transition-transform duration-200 shadow-md" href="https://cv-madgenius-ai.streamlit.app/" target="_blank" rel="noopener noreferrer">Build My Resume</a>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative pt-32 pb-section-gap-mobile md:pb-section-gap-desktop overflow-hidden flex items-center min-h-[90vh]">
+<!-- Background Blobs -->
+<div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+<div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary-fixed rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+<div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-tertiary-fixed rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" style="animation-delay: 2s;"></div>
+<div class="absolute bottom-[-20%] left-[20%] w-[32rem] h-[32rem] bg-secondary-fixed rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob" style="animation-delay: 4s;"></div>
+</div>
+<div class="max-w-container-max mx-auto px-grid-margin w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="animate-fade-in-up">
+<div class="inline-flex items-center gap-2 bg-tertiary-fixed/20 text-tertiary px-4 py-1.5 rounded-full mb-6 glass-panel">
+<span class="material-symbols-outlined text-sm">verified</span>
+<span class="font-label-caps text-label-caps">100% Free — No account needed</span>
+</div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-6">
+                    Resumes that <br>
+<span class="font-display-accent text-primary italic">don't lie</span> for you.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-xl">
+                    ResumeAI asks the right clarifying questions to turn vague experience into high-impact, honest bullet points. No fabrication, just better writing.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="bg-secondary-container text-on-secondary-container px-8 py-4 rounded-lg font-headline-sm text-headline-sm text-center shadow-[0_0_20px_rgba(254,166,25,0.4)] hover:shadow-[0_0_30px_rgba(254,166,25,0.6)] hover:scale-105 transition-all duration-300" href="https://cv-madgenius-ai.streamlit.app/" target="_blank" rel="noopener noreferrer">
+                        Build My Resume — Free
+                    </a>
+</div>
+</div>
+<div class="relative h-[500px] w-full animate-fade-in-up" style="animation-delay: 0.2s;">
+<!-- STITCH_SVG_START:ANIMATION_2 class="absolute inset-0 w-full h-full object-contain filter drop-shadow-2xl" --><div class="absolute inset-0 w-full h-full object-contain filter drop-shadow-2xl" id="animated-svg-ANIMATION_2" style="display:block;"><svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="cardGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#ffffff;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#f8fafc;stop-opacity:1"></stop>
+</linearGradient>
+<filter height="140%" id="shadow" width="140%" x="-20%" y="-20%">
+<blur stdDeviation="10"></blur>
+</filter>
+</defs>
+<!-- Resume Card -->
+<rect fill="url(#cardGrad)" height="260" rx="12" stroke="#e2e8f0" stroke-width="1" width="400" x="50" y="20"></rect>
+<!-- Profile/Header Placeholder -->
+<rect fill="#4f46e5" height="12" opacity="0.8" rx="4" width="120" x="80" y="50"></rect>
+<rect fill="#94a3b8" height="8" opacity="0.4" rx="4" width="200" x="80" y="70"></rect>
+<!-- Experience Section -->
+<text fill="#14213d" font-family="sans-serif" font-size="14" font-weight="600" x="80" y="110">Experience</text>
+<!-- Bullet Point Container -->
+<g id="bullet-animation">
+<!-- Vague State -->
+<g id="state-vague">
+<circle cx="85" cy="135" fill="#4f46e5" r="3"></circle>
+<text fill="#4b5563" font-family="sans-serif" font-size="12" x="100" y="139">
+        Helped with customer support and fixed some issues.
+        <animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="1;1;0;0;0;1"></animate>
+</text>
+</g>
+<!-- Clarifying Question -->
+<g id="question-bubble" opacity="0">
+<rect fill="#f59e0b" height="60" rx="10" width="200" x="220" y="145"></rect>
+<path d="M240 145 L250 135 L260 145" fill="#f59e0b"></path>
+<text fill="white" font-family="sans-serif" font-size="11" font-weight="600" x="235" y="165">Gemini: How many customers?</text>
+<text fill="white" font-family="sans-serif" font-size="11" font-weight="600" x="235" y="182">What was the resolution time?</text>
+<animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;1;1;0;0"></animate>
+<animateTransform attributeName="transform" dur="10s" repeatCount="indefinite" type="translate" values="0 10; 0 0; 0 0; 0 -10; 0 10"></animateTransform>
+</g>
+<!-- Polished State -->
+<g id="state-polished" opacity="0">
+<circle cx="85" cy="135" fill="#10b981" r="3"></circle>
+<text fill="#14213d" font-family="sans-serif" font-size="12" font-weight="600" x="100" y="139">
+        Resolved 200+ tickets weekly with a 15% faster turnaround.
+        <animate attributeName="opacity" dur="10s" repeatCount="indefinite" values="0;0;0;1;1;0"></animate>
+</text>
+</g>
+</g>
+<!-- More Placeholder Lines -->
+<rect fill="#e2e8f0" height="6" rx="3" width="300" x="100" y="160"></rect>
+<rect fill="#e2e8f0" height="6" rx="3" width="250" x="100" y="175"></rect>
+<rect fill="#e2e8f0" height="6" rx="3" width="320" x="100" y="210"></rect>
+</svg>
+</div><!-- STITCH_SVG_END:ANIMATION_2 -->
+</div>
+</div>
+</header>
+<!-- Problem / Solution -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto px-grid-margin">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="reveal active">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6">Generic AI tools make stuff up.</h2>
+<div class="glass-panel p-8 rounded-xl border-l-4 border-error/50">
+<p class="font-body-md text-body-md text-on-surface-variant italic mb-4">"Led a team of 50 to increase revenue by 300%..."</p>
+<p class="font-label-caps text-label-caps text-error flex items-center gap-2">
+<span class="material-symbols-outlined">warning</span> HALLUCINATED METRIC
+                        </p>
+</div>
+</div>
+<div class="reveal active">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6">ResumeAI asks you first.</h2>
+<div class="glass-panel p-8 rounded-xl border-l-4 border-primary">
+<div class="flex items-start gap-4 mb-4">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-sm">smart_toy</span>
+</div>
+<div class="bg-surface-container p-4 rounded-lg rounded-tl-none w-full">
+<p class="font-body-md text-body-md text-on-surface">You mentioned managing a project. Did you have a specific budget or team size?</p>
+</div>
+</div>
+<div class="flex items-end justify-end gap-4">
+<div class="bg-primary/10 p-4 rounded-lg rounded-tr-none">
+<p class="font-body-md text-body-md text-on-surface">Yes, 3 people and about $10k.</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">person</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- How it Works -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop bg-surface relative overflow-hidden">
+<div class="max-w-container-max mx-auto px-grid-margin relative z-10">
+<div class="text-center mb-16 reveal active">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4">How it works</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">A seamless process to translate your raw experience into a professional narrative.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<!-- Step 1 -->
+<div class="glass-panel p-6 rounded-xl hover:border-primary transition-colors reveal active" style="transition-delay: 0.1s;">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-xl">edit_document</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">1. Fill details</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Dump your messy notes, old resumes, or raw thoughts.</p>
+</div>
+<!-- Step 2 -->
+<div class="glass-panel p-6 rounded-xl hover:border-primary transition-colors reveal active" style="transition-delay: 0.2s;">
+<div class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center mb-6 shadow-lg shadow-primary-container/30">
+<span class="material-symbols-outlined text-on-primary-container text-xl">forum</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">2. AI clarifies</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Gemini asks targeted questions to extract impact and metrics.</p>
+</div>
+<!-- Step 3 -->
+<div class="glass-panel p-6 rounded-xl hover:border-primary transition-colors reveal active" style="transition-delay: 0.3s;">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-xl">preview</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">3. Live Preview</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Watch your professional resume generate in real-time.</p>
+</div>
+<!-- Step 4 -->
+<div class="glass-panel p-6 rounded-xl hover:border-primary transition-colors reveal active" style="transition-delay: 0.4s;">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-xl">download</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">4. Export</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Download as an ATS-friendly PDF or editable DOCX.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-section-gap-mobile md:py-section-gap-desktop bg-gradient-to-br from-primary-container to-surface-tint text-on-primary relative overflow-hidden">
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-50"></div>
+<div class="max-w-container-max mx-auto px-grid-margin relative z-10 text-center reveal active">
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-6">Ready to write a better resume?</h2>
+<p class="font-body-lg text-body-lg text-on-primary-container mb-10 max-w-2xl mx-auto opacity-90">Stop struggling with phrasing. Let ResumeAI extract your true value and present it perfectly.</p>
+<a class="inline-block bg-secondary-container text-on-secondary-container px-10 py-5 rounded-lg font-headline-sm text-headline-sm shadow-[0_0_20px_rgba(254,166,25,0.3)] hover:shadow-[0_0_40px_rgba(254,166,25,0.6)] hover:scale-105 transition-all duration-300" href="https://cv-madgenius-ai.streamlit.app/" target="_blank" rel="noopener noreferrer">
+                Build My Resume — Free
+            </a>
+<p class="mt-4 font-label-caps text-label-caps opacity-75">No credit card. No account required to start.</p>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-inverse-surface w-full py-section-gap-mobile md:py-section-gap-desktop max-w-container-max mx-auto px-grid-margin flex flex-col md:flex-row justify-between items-center gap-base border-t-8 border-surface-container-high dark:border-surface-container-highest">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="font-display-lg text-headline-sm font-bold text-primary dark:text-primary-fixed">ResumeAI</span>
+<span class="font-body-md text-body-md text-secondary dark:text-secondary-fixed opacity-90 hover:opacity-100">© 2024 ResumeAI. Powered by Gemini.</span>
+</div>
+<div class="flex gap-6 mt-6 md:mt-0">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="https://github.com/Ortholm10/AI-Resume-Generator" target="_blank" rel="noopener noreferrer">GitHub</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline hover:text-secondary dark:hover:text-secondary-fixed transition-colors" href="#">Contact</a>
+</div>
+</footer>
+<script>
+        // Scroll reveal logic
+        const reveals = document.querySelectorAll('.reveal');
+
+        function revealOnScroll() {
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        // Trigger once on load
+        revealOnScroll();
+    </script>
+
+
+</body></html>
